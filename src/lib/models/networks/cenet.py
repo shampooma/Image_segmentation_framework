@@ -170,11 +170,10 @@ class DecoderBlock(nn.Module):
 
 
 class CE_Net_(nn.Module):
-    def __init__(self, num_classes=1, num_channels=3):
+    def __init__(self, num_classes=1, num_channels=3, resnet_version='resnet34'):
         super(CE_Net_, self).__init__()
         filters = [64, 128, 256, 512]
-        # resnet = models.resnet34(pretrained=True)
-        resnet = get_resnet_backbone('resnet34')(pretrain=True)
+        resnet = get_resnet_backbone(resnet_version)(pretrain=False, num_channels=num_channels)
         self.firstconv = resnet.conv1
         self.firstbn = resnet.bn1
         self.firstrelu = resnet.relu

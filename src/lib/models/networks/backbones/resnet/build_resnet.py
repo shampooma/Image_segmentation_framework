@@ -17,10 +17,10 @@ model_urls = {
 
 
 class build_resnet(nn.Module):
-    def __init__(self, block, layers):
+    def __init__(self, block, layers, num_channels=1):
         super(build_resnet, self).__init__()
         self.inplanes = 64
-        self.conv1 = nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3, bias=False)
+        self.conv1 = nn.Conv2d(num_channels, 64, kernel_size=7, stride=2, padding=3, bias=False)
         self.bn1 = nn.BatchNorm2d(64, momentum=BN_MOMENTUM)
         self.relu = nn.ReLU(inplace=True)
 
@@ -82,37 +82,37 @@ class build_resnet(nn.Module):
 #                101: (Bottleneck, [3, 4, 23, 3]),
 #                152: (Bottleneck, [3, 8, 36, 3])}
 
-def get_resnet_18(pretrain=True):
-    model = build_resnet(BasicBlock, [2, 2, 2, 2])
+def get_resnet_18(pretrain=True, num_channels=1):
+    model = build_resnet(BasicBlock, [2, 2, 2, 2], num_channels=num_channels)
     if pretrain:
         model.init_weights(resnet_model_name='resnet18')
 
     return model
 
 
-def get_resnet_34(pretrain=True):
-    model = build_resnet(BasicBlock, [3, 4, 6, 3])
+def get_resnet_34(pretrain=True, num_channels=1):
+    model = build_resnet(BasicBlock, [3, 4, 6, 3], num_channels=num_channels)
     if pretrain:
         model.init_weights(resnet_model_name='resnet34')
     return model
 
 
-def get_resnet_50(pretrain=True):
-    model = build_resnet(Bottleneck, [3, 4, 6, 3])
+def get_resnet_50(pretrain=True, num_channels=1):
+    model = build_resnet(Bottleneck, [3, 4, 6, 3], num_channels=num_channels)
     if pretrain:
         model.init_weights(resnet_model_name='resnet50')
     return model
 
 
-def get_resnet_101(pretrain=True):
-    model = build_resnet(Bottleneck, [3, 4, 23, 3])
+def get_resnet_101(pretrain=True, num_channels=1):
+    model = build_resnet(Bottleneck, [3, 4, 23, 3], num_channels=num_channels)
     if pretrain:
         model.init_weights(resnet_model_name='resnet101')
     return model
 
 
-def get_resnet_152(pretrain=True):
-    model = build_resnet(Bottleneck, [3, 8, 36, 3])
+def get_resnet_152(pretrain=True, num_channels=1):
+    model = build_resnet(Bottleneck, [3, 8, 36, 3], num_channels=num_channels)
     if pretrain:
         model.init_weights(resnet_model_name='resnet152')
     return model
